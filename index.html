@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html ng-app="usersApp">
+
+<head>
+    <title>Heliverse Mock Data</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+    .pagination {
+        margin-top: 20px;
+    }
+</style>
+
+<body ng-controller="HomeController">
+    <div class="container card p-4 mt-5">
+        <div class="row">
+            <div class="form-group col-md-6 col-lg-6 float-left">
+                <input type="text" class="float-left form-control shadow-none" placeholder="Search by First Name"
+                    ng-model="searchText.first_name">
+            </div>
+            <div class="col-md-6 float-right">
+                <div class="form-group float-right">
+                    <label>Filter by Gender:</label>
+                    <div class="form-check">
+                        <input class="form-check-input shadow-none" type="checkbox" id="maleCheckbox"
+                            ng-model="filters.gender.male">
+                        <label class="form-check-label" for="maleCheckbox">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input shadow-none" type="checkbox" id="femaleCheckbox"
+                            ng-model="filters.gender.female">
+                        <label class="form-check-label" for="femaleCheckbox">Female</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Filter by Domain:</label>
+                    <input type="text" class="form-control shadow-none" ng-model="filters.domain">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group float-right">
+                    <label>Filter by Availability:</label>
+                    <select class="form-control shadow-none" ng-model="filters.availability">
+                        <option value="">All</option>
+                        <option value="true">Available</option>
+                        <option value="false">Not Available</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container card mt-2 mb-5">
+        <div class="row card-body">
+            <div class="table-responsive">
+                <div class="card-title">
+                    <h3 class="text-center">Heliverse Mock Data</h3>
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Select Users</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Domain</th>
+                            <th scope="col">Avatar</th>
+                            <th scope="col">Available</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in pagedUsers | filter:searchText | filter:filterRecords">
+                            <th>{{ user.id }}</th>
+                            <td><input type="checkbox" ng-model="user.selected"></td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.gender }}</td>
+                            <td>{{ user.domain }}</td>
+                            <td><img ng-src="{{ user.avatar }}" alt="Avatar" class="rounded-circle"
+                                    style="width: 50px;"></td>
+                            <td>{{ user.available }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="pagination justify-content-center mt-3 mb-3">
+            <button class="btn btn-primary mr-2 shadow-none" type="button" ng-disabled="currentPage === 1"
+                ng-click="prevPage()">
+                Previous
+            </button>
+            <span class="align-self-center">{{ currentPage }} / {{ totalPages }}</span>
+            <button class="btn btn-primary ml-2 shadow-none" type="button" ng-disabled="currentPage === totalPages"
+                ng-click="nextPage()">
+                Next
+            </button>
+        </div>
+
+        <!-- Team Details -->
+        <div class="container mb-4 card">
+            <h3 class="text-center card-title">Created Team</h3>
+            <div class="row card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Domain</th>
+                                <th scope="col">Avatar</th>
+                                <th scope="col">Available</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in team">
+                                <th>{{ user.id }}</th>
+                                <td>{{ user.first_name }}</td>
+                                <td>{{ user.last_name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.gender }}</td>
+                                <td>{{ user.domain }}</td>
+                                <td><img ng-src="{{ user.avatar }}" alt="Avatar" class="rounded-circle"
+                                        style="width: 50px;"></td>
+                                <td>{{ user.available }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="d-grid gap-2 d-md-flex shadow-none justify-content-md-end">
+                <button class="btn btn-primary mt-2 mb-4" ng-click="createTeam()" type="button">Create Team</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
